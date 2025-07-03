@@ -1,422 +1,439 @@
-以下是《OECT Transfer Curve Advanced Analysis》文档的完整中文翻译：
+以下是该英文文档的完整中文翻译：
 
 ---
 
-# OECT 转移曲线高级分析工具
+# OECT 转移特性分析工具
 
-[![PyPI 版本](https://badge.fury.io/py/oect-transfer-analyse.svg)](https://badge.fury.io/py/oect-transfer-analyse)
-[![Python 支持](https://img.shields.io/pypi/pyversions/oect-transfer-analyse.svg)](https://pypi.org/project/oect-transfer-analyse/)
-[![许可证: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python版本](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![许可证](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![版本](https://img.shields.io/badge/version-1.0.0-orange.svg)](https://github.com/yourusername/oect-transfer-analysis)
 
-这是一个用于分析和可视化有机电化学晶体管（OECT）转移曲线的高级 Python 工具包，构建于核心包 `oect-transfer` 之上。
-
----
-
-## 🎯 功能亮点
-
-### 🔬 高级分析功能
-
-* **时间序列分析**：提取并分析器件参数随时间演化的过程
-* **漂移检测**：自动检测参数漂移和器件退化现象
-* **趋势分析**：统计趋势检测，包含显著性检验
-* **稳定性评估**：对器件稳定性进行全面评估
-* **批量处理**：同时比较多个器件或测试条件
-
-### 📊 增强型可视化
-
-* **可用于发表的图像**：高质量图像，支持多种风格
-* **参数趋势图**：时间序列变化趋势展示
-* **漂移分析图**：直观展示漂移模式
-* **对比图**：并排展示不同器件或条件的曲线
-* **自定义样式**：支持发表、简约、标准风格
-
-### 🎬 动画生成
-
-* **转移曲线演化动画**：MP4 视频展示曲线随时间演化
-* **参数变化动画**：展示参数随时间变化的视频
-* **高性能生成**：支持并行处理加快视频生成速度
-* **多种格式**：支持不同编码格式和视频质量
-* **批量动画**：支持多数据集批量动画生成
-
-### 🔄 预设工作流
-
-* **完整分析流程**：一键执行完整分析
-* **快速稳定性筛查**：快速评估器件稳定性
-* **批量对比分析**：多个器件的统一分析流程
-* **自定义流程**：灵活拼装分析模块构建自定义工作流
+用于有机电化学晶体管（OECT）转移曲线的高级分析工具，提供全面的时间序列分析、可视化和动画生成能力。
 
 ---
 
-## 📦 安装方式
+## 🚀 核心功能
 
-### 基础安装（核心功能 + 分析功能）
+* **📁 批量数据加载**：自动加载并处理多个转移曲线 CSV 文件
+* **📈 时间序列分析**：提取参数随时间变化的趋势，并检测漂移
+* **🎨 高级可视化**：生成可用于发表的图像，支持自定义配色方案
+* **🎬 动画生成**：制作设备演化过程的高质量视频
+* **📊 统计分析**：提供详尽的统计摘要与稳定性分析
+* **⚡ 性能优化**：支持并行处理以加速动画生成
+
+---
+
+## 📦 安装方法
+
+### 基础安装
 
 ```bash
-pip install oect-transfer-analyse
+pip install oect-transfer-analysis
 ```
 
-### 加上绘图支持
+### 含动画支持
 
 ```bash
-pip install oect-transfer-analyse[plotting]
+pip install oect-transfer-analysis[animation]
 ```
 
-### 加上动画支持
+### 开发安装
 
 ```bash
-pip install oect-transfer-analyse[animation]
-```
-
-### 完整安装（所有功能）
-
-```bash
-pip install oect-transfer-analyse[all]
-```
-
-### 开发者安装
-
-```bash
-git clone https://github.com/yourusername/oect-transfer-analyse.git
-cd oect-transfer-analyse
-pip install -e .[all,dev]
+git clone https://github.com/Durian-leader/oect_transfer_analyse.git
+cd oect-transfer-analysis
+pip install -e .[dev]
 ```
 
 ---
 
-## 🚀 快速开始
+## 🔧 快速开始
 
-### 完整分析流程示例
+### 基本用法
 
 ```python
-import oect_transfer_analyse as ota
+from oect_transfer_analysis import DataLoader, TimeSeriesAnalyzer, Visualizer
 
-# 执行完整分析流程
-results = ota.complete_analysis_workflow(
-    data_folder='device_data/',
-    device_type='N',
-    device_label='Sample_A',
-    output_dir='Sample_A_analysis/',
-    create_plots=True,
-    create_animations=True
-)
+# 1. 加载转移曲线数据
+loader = DataLoader("path/to/csv/files")
+transfer_objects = loader.load_all_files(device_type="N")
 
-# 输出结果
-print(f"器件是否稳定: {results['stability_summary']['overall_stable']}")
-print(f"生成的文件数量: {len(results['files'])}")
-```
+# 2. 时间序列分析
+analyzer = TimeSeriesAnalyzer(transfer_objects)
+time_series = analyzer.extract_time_series()
 
-### 时间序列分析
+# 3. 创建可视化图像
+viz = Visualizer()
 
-```python
-# 加载数据
-transfer_objects = ota.load_all_transfer_files('data/', 'N')
+# 使用黑到红的渐变色绘制演化图
+fig, ax = viz.plot_evolution(transfer_objects, colormap="black_to_red")
 
-# 稳定性分析
-extractor = ota.analyze_transfer_stability(transfer_objects)
-
-# 参数趋势检测
-trends = ota.detect_parameter_trends(extractor)
-print(trends)
-
-# 生成 HTML 报告
-ota.generate_stability_report(extractor, 'stability_report.html')
-```
-
-### 高质量可视化
-
-```python
-# 生成曲线演化图
-ota.plot_transfer_evolution(
+# 对特定时间点进行对比
+fig, ax = viz.plot_comparison(
     transfer_objects, 
-    style='publication',
-    colormap='viridis',
-    save_path='figure_1.png'
+    indices=[0, 25, 50],
+    labels=["初始", "中期", "最终"]
 )
 
-# 生成参数趋势图
-ota.plot_parameter_trends(
-    extractor,
-    parameters=['gm_max_raw', 'Von_raw'],
-    style='publication'
-)
+# 4. 统计分析
+stats = analyzer.get_summary_statistics()
+print(stats)
 
-# 批量生成图集
-ota.create_publication_plots(
-    transfer_objects,
-    output_dir='publication_figures/',
-    device_label='Device_A'
-)
+# 漂移检测
+drift = analyzer.detect_drift("gm_max_raw", threshold=0.05)
+print(f"检测到漂移: {drift['drift_detected']}")
 ```
 
 ### 动画生成
 
 ```python
-# 检查动画依赖是否可用
-if ota.check_animation_available():
-    ota.generate_transfer_animation(
+# 生成动画（需要安装动画相关依赖）
+if viz.ANIMATION_AVAILABLE:
+    viz.generate_animation(
         transfer_objects,
-        output_path='device_evolution.mp4',
-        style='publication',
+        "device_evolution.mp4",
         fps=30,
         dpi=150
     )
-
-    ota.create_animation_preview(
-        transfer_objects,
-        indices=[0, 10, 20, 30, 40],
-        output_path='evolution_preview.png'
-    )
-else:
-    print("请先安装动画依赖: pip install oect-transfer-analyse[animation]")
 ```
 
-### 快速筛查器件
+---
+
+## 📊 数据格式
+
+CSV 文件应包含电压和电流两列，工具会自动识别常见列名：
+
+* **电压列**：`vg`, `v_g`, `gate`, `vgs`, `v_gs`
+* **电流列**：`id`, `i_d`, `drain`, `ids`, `i_ds`, `current`
+
+示例 CSV 格式：
+
+```csv
+Vg,Id
+-0.6,-1.23e-11
+-0.59,-1.45e-11
+...
+```
+
+---
+
+## 🎨 可视化示例
+
+### 演化图
 
 ```python
-# 快速稳定性检查
-status = ota.quick_stability_check(transfer_objects)
-print(f"稳定性状态: {status}")  # 'STABLE', 'MODERATE_DRIFT', 'SIGNIFICANT_DRIFT'
+viz.plot_evolution(
+    transfer_objects,
+    label="器件 A",
+    colormap="black_to_red",
+    y_scale="log",
+    save_path="evolution_plot.png"
+)
+```
 
-# 批量对比分析
-results = ota.batch_comparison_workflow(
-    data_folders=['device_A/', 'device_B/', 'device_C/'],
-    device_labels=['Device A', 'Device B', 'Device C'],
-    output_dir='batch_analysis/'
+### 多点对比
+
+```python
+viz.plot_comparison(
+    transfer_objects,
+    indices=[0, 50, 100],
+    labels=["初始", "退化", "恢复"],
+    colormap="viridis"
+)
+```
+
+### 参数随时间变化图
+
+```python
+analyzer.plot_time_series(
+    parameters=['gm_max_raw', 'Von_raw', 'I_max_raw'],
+    save_path="time_series.png"
 )
 ```
 
 ---
 
-## 📋 核心函数
+## 📈 高级分析
 
-### `complete_analysis_workflow()`
+### 稳定性分析
 
-端到端完整分析，包括：
+```python
+stability_results = analyzer.analyze_stability(threshold=0.05)
+print(stability_results)
 
-* 数据加载与验证
-* 时间序列提取与漂移检测
-* 可视化图表生成
-* 动画制作
-* HTML 报告输出
-
-### `quick_stability_check()`
-
-用于快速筛查器件稳定性，适用于：
-
-* 工业生产质检
-* 初期性能评估
-* 批量数据分析
-
-### `batch_comparison_workflow()`
-
-用于比较多个器件在不同工艺或条件下的表现：
-
----
-
-## 🎨 绘图样式
-
-### 发布风格（publication）
-
-* 面向论文投稿优化的图表
-* 专业排版与色彩
-* 适用于数字与印刷出版
-
-### 极简风格（minimal）
-
-* 简洁干净
-* 无干扰视觉元素
-* 适合演示文稿
-
-### 标准风格（standard）
-
-* 平衡美观与可读性
-* 适合报告或说明文档
-
----
-
-## 🔧 软件结构
-
-此工具包构建在 `oect-transfer` 核心包之上：
-
-```
-oect-transfer-analyse/
-├── analysis.py        # 时间序列分析与漂移检测
-├── plotting.py        # 增强可视化模块
-├── animation.py       # 视频生成模块
-├── workflows.py       # 预定义分析工作流
-└── __init__.py        # 包接口与依赖管理
+# 自定义参数漂移检测
+for param in ['gm_max_raw', 'Von_raw', 'I_max_raw']:
+    drift = analyzer.detect_drift(param, threshold=0.03)
+    print(f"{param}: {drift['drift_direction']}，变化 {drift['final_drift_percent']:.2f}%")
 ```
 
-### 依赖管理
+### 导出结果
 
-* **核心功能**：仅依赖 `oect-transfer`, `numpy`, `pandas`
-* **绘图功能**：可选依赖 `matplotlib`
-* **动画功能**：可选依赖 `opencv-python`
-* **降级支持**：缺少依赖时提示清晰的错误信息
+```python
+df = analyzer.to_dataframe()
+df.to_csv("analysis_results.csv", index=False)
+
+stats = analyzer.get_summary_statistics()
+stats.to_csv("statistics_summary.csv")
+```
 
 ---
 
-## 📊 分析能力详解
+## 🎬 动画功能
 
-### 可提取的参数（支持正/反向扫）
+### 标准动画
 
-* `gm_max_raw/forward/reverse`: 最大跨导
-* `I_max_raw/forward/reverse`: 最大电流
-* `I_min_raw/forward/reverse`: 最小电流
-* `Von_raw/forward/reverse`: 阈值电压
-* `absgm_max_raw/forward/reverse`: 跨导绝对值最大值
-* `absI_max_raw/forward/reverse`: 电流绝对值最大值
-* `absI_min_raw/forward/reverse`: 电流绝对值最小值
+```python
+from oect_transfer_analysis import generate_transfer_animation
 
-### 漂移检测方法
+generate_transfer_animation(
+    transfer_objects,
+    output_path="device_evolution.mp4",
+    fps=30,
+    dpi=150,
+    figsize=(12, 5)
+)
+```
 
-* **相对漂移**：相较初始值的百分比变化
-* **绝对漂移**：数值上的绝对变化
-* **滑动窗口分析**：局部漂移分析
-* **趋势分析**：基于线性回归的趋势检测
+### 内存优化动画
 
-### 稳定性指标
+```python
+generator = AnimationGenerator()
+generator.generate_memory_optimized(
+    transfer_objects,
+    "large_dataset_evolution.mp4",
+    batch_size=50
+)
+```
 
-* **变异系数**：评估参数波动性
-* **稳定性评分**：整体稳定性量化
-* **漂移事件**：识别关键漂移节点
-* **趋势强度**：趋势的统计显著性分析
+### 自定义参数动画
+
+```python
+generate_transfer_animation(
+    transfer_objects,
+    "custom_animation.mp4",
+    fps=60,
+    dpi=200,
+    xlim=(-0.6, 0.6),
+    ylim_log=(1e-12, 1e-6),
+    codec='H264'
+)
+```
+
+---
+
+## 🔍 API 参考
+
+### 核心类
+
+#### `DataLoader`
+
+```python
+DataLoader(folder_path)
+```
+
+* `load_all_files(device_type, file_pattern, sort_numerically)`：加载文件
+* `analyze_batch()`：分析批量数据
+* `get_metadata()`：获取加载元信息
+
+#### `TimeSeriesAnalyzer`
+
+```python
+TimeSeriesAnalyzer(transfer_objects)
+```
+
+* `extract_time_series()`：提取时间序列
+* `detect_drift(parameter, threshold)`：检测漂移
+* `get_summary_statistics()`：统计摘要
+* `analyze_stability()`：稳定性分析
+
+#### `Visualizer`
+
+```python
+Visualizer()
+```
+
+* `plot_evolution()`：绘制演化图
+* `plot_comparison()`：绘制对比图
+* `generate_animation()`：生成动画
+
+### 实用函数
+
+```python
+from oect_transfer_analysis import (
+    load_transfer_files,
+    plot_transfer_evolution,
+    plot_transfer_comparison,
+    check_dependencies
+)
+```
+
+---
+
+## 📋 系统要求
+
+### 必要依赖
+
+* `oect-transfer>=0.4.2`
+* `numpy>=1.20.0`
+* `pandas>=1.3.0`
+* `matplotlib>=3.5.0`
+
+### 可选依赖（用于动画）
+
+* `opencv-python>=4.5.0`
+* `Pillow>=8.0.0`
+
+---
+
+## 🏗️ 架构概览
+
+该工具构建于 `oect-transfer` 库之上：
+
+```
+oect-transfer-analysis/
+├── DataLoader          # 批量加载与验证
+├── TimeSeriesAnalyzer  # 参数提取与漂移分析
+├── Visualizer          # 高级可视化
+├── AnimationGenerator  # 并行处理的视频生成
+└── Utilities           # 辅助函数与系统检查
+```
 
 ---
 
 ## 🎯 应用场景
 
-### 学术研究
-
-* 器件稳定性研究
-* 参数演化分析
-* 支持发表的图表生成
-* 多器件比较分析
-
-### 工业应用
-
-* 生产质控
-* 器件可靠性评估
-* 批次一致性分析
-* 工艺优化指导
-
-### 教育用途
-
-* 交互式演示
-* 数据分析教学
-* 可视化教学示例
-* 科研培训辅助
+* **器件老化研究**：跟踪参数随循环次数变化
+* **环境稳定性测试**：在不同环境下分析稳定性
+* **质量控制**：自动分析生产批次数据
+* **科研发表**：生成可发表图表与动画
+* **实时监测**：处理测试系统的数据流
 
 ---
 
-## 📈 性能优化
+## ⚡ 性能优化建议
 
-### 动画生成
+### 针对大数据集
 
-* **并行处理**：多核 CPU 高效利用
-* **内存优化**：可处理大体积数据
-* **多种编码器支持**：适配不同平台
-* **速度**：比串行处理快 3-5 倍
+* 使用 `generate_memory_optimized()` 生成动画
+* 将 DPI 设置为 50–100 加速渲染
+* 使用批处理分析大量文件
 
-### 分析效率
+### 高质量输出
 
-* **向量化计算**：基于 NumPy 优化性能
-* **高效算法**：适配大规模时间序列
-* **缓存机制**：智能缓存避免重复计算
+* 使用 DPI 200–300 生成发表图像
+* 设置高帧率（60+ fps）获得流畅动画
+* 使用 'H264' 编码提高压缩效率
 
----
-
-## 🤝 系统集成支持
-
-### 与核心包联用
+### 并行处理
 
 ```python
-import oect_transfer as ot
-import oect_transfer_analyse as ota
+# 使用所有 CPU 核心
+generate_transfer_animation(transfer_objects, n_workers=None)
 
-transfer_objects = ot.load_all_transfer_files('data/', 'N')
-results = ota.complete_analysis_workflow(transfer_objects)
+# 限制并行数以节省内存
+generate_transfer_animation(transfer_objects, n_workers=4)
 ```
 
-### 与 Jupyter 配合
-
-* 适用于交互式分析与教学演示
-
-### 与自动化流程集成
-
-* 可嵌入批处理与自动化测试系统中使用
-
 ---
 
-## 📚 文档资源
+## 🐛 故障排查
 
-* **API 参考**：详细函数文档和使用示例
-* **教学教程**：逐步讲解典型工作流
-* **案例演示**：真实分析案例
-* **最佳实践**：OECT 分析的推荐方法
+### 常见问题
 
----
-
-## 🧪 测试方法
+**导入错误**：
 
 ```bash
-# 运行所有测试
-pytest
+pip install oect-transfer oect-transfer-analysis
+```
 
-# 带覆盖率的测试
-pytest --cov=oect_transfer_analyse
+**缺少动画依赖**：
 
-# 运行特定模块测试
-pytest tests/test_analysis.py
-pytest tests/test_plotting.py
-pytest tests/test_animation.py
+```bash
+pip install oect-transfer-analysis[animation]
+```
+
+**大数据内存问题**：
+
+```python
+generator.generate_memory_optimized(data, batch_size=25)
+```
+
+**列名识别失败**：
+
+```python
+loader.load_all_files(vg_column="VGate", id_column="IDrain")
+```
+
+**系统状态检查**：
+
+```python
+from oect_transfer_analysis import check_dependencies, print_system_info
+
+check_dependencies()
+print_system_info()
 ```
 
 ---
 
 ## 🤝 贡献指南
 
-欢迎贡献！请参见我们的[贡献指南](CONTRIBUTING.md)。
+欢迎贡献！请阅读 [贡献指南](CONTRIBUTING.md)。
 
-### 开发环境配置
+### 开发环境设置
 
 ```bash
-git clone https://github.com/yourusername/oect-transfer-analyse.git
-cd oect-transfer-analyse
-pip install -e .[all,dev]
-pre-commit install
+git clone https://github.com/yourusername/oect-transfer-analysis.git
+cd oect-transfer-analysis
+pip install -e .[dev]
+```
+
+### 代码风格
+
+使用 `black` 格式化代码，使用 `flake8` 检查风格：
+
+```bash
+black src/
+flake8 src/
 ```
 
 ---
 
-## 📄 开源协议
+## 📄 许可证
 
-本项目采用 MIT 协议开源，详情见 [LICENSE](LICENSE)。
+本项目采用 MIT 许可证，详见 [LICENSE](LICENSE) 文件。
+
+---
+
+## 👥 作者
+
+* **李东昊** - *项目负责人* - [lidonghao100@outlook.com](mailto:lidonghao100@outlook.com)
 
 ---
 
 ## 🙏 鸣谢
 
-* 基于 `oect-transfer` 核心包构建
-* 感谢 OECT 研究社区的启发与支持
-* 感谢所有的贡献者与用户
+* 构建于优秀的 `oect-transfer` 库之上
+* 感谢 OECT 研究社区提供反馈与测试
+* 感谢 Matplotlib 与 OpenCV 团队提供可视化与视频支持
 
 ---
 
-## 📞 支持
+## 📞 支持与联系
 
-* **文档网站**：[Read the Docs](https://oect-transfer-analyse.readthedocs.io/)
-* **问题反馈**：[GitHub Issues](https://github.com/yourusername/oect-transfer-analyse/issues)
-* **讨论区**：[GitHub Discussions](https://github.com/yourusername/oect-transfer-analyse/discussions)
-
----
-
-## 🔗 相关项目
-
-* [`oect-transfer`](https://github.com/yourusername/oect-transfer)：核心转移曲线分析包
-* [`oect-data`](https://github.com/yourusername/oect-data)：OECT 数据集收集
-* [`oect-modeling`](https://github.com/yourusername/oect-modeling)：OECT 模型工具包
+* 📧 邮箱：[lidonghao100@outlook.com](mailto:lidonghao100@outlook.com)
+* 🐛 问题反馈：[GitHub Issues](https://github.com/Durian-leader/oect_transfer_analyse/issues)
 
 ---
 
-*本项目致力于服务 OECT 研究社区 ❤️*
+## 🗺️ 项目路线图
+
+* [ ] 实时数据流支持
+* [ ] 交互式 Web 可视化仪表板
+* [ ] 基于机器学习的异常检测
+* [ ] 与仪器设备 API 集成
+* [ ] 更高级的退化预测统计模型
+
+---
+
+**关键词**：OECT、有机电化学晶体管、转移曲线、时间序列分析、器件表征、Python、可视化、动画生成

@@ -4,6 +4,9 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-orange.svg)](https://github.com/yourusername/oect-transfer-analysis)
 
+[简体中文](https://github.com/Durian-leader/oect_transfer/blob/main/README_CN.md)
+
+
 Advanced analysis tools for Organic Electrochemical Transistor (OECT) transfer curves, providing comprehensive time series analysis, visualization, and animation capabilities.
 
 ## 🚀 Key Features

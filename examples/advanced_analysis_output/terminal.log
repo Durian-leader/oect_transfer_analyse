@@ -1,0 +1,224 @@
+PS C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis> & C:/Users/lidon/Documents/Develop/OECT-dataprocess-packages/oect_transfer_analysis/.venv/Scripts/python.exe c:/Users/lidon/Documents/Develop/OECT-dataprocess-packages/oect_transfer_analysis/examples/advanced_analysis.py
+=== OECT Transfer Analysis - Advanced Example ===
+
+1. System check...
+=== Dependency Check ===
+
+Core dependencies:
+  numpy: ✓ Available
+  pandas: ✓ Available
+  matplotlib: ✓ Available
+  oect_transfer: ✓ Available
+
+Optional dependencies (for animation):
+  cv2: ✓ Available
+  PIL: ✓ Available
+
+Animation support: ✓ Available
+=== Advanced Data Loading ===
+Creating large synthetic dataset...
+Created 100 transfer curves
+
+First 10 filenames:
+   1. device_A_transfer_1.csv
+   2. device_A_transfer_2.csv
+   3. device_A_transfer_3.csv
+   4. device_A_transfer_4.csv
+   5. device_A_transfer_5.csv
+   6. device_A_transfer_6.csv
+   7. device_A_transfer_7.csv
+   8. device_A_transfer_8.csv
+   9. device_A_transfer_9.csv
+  10. device_A_transfer_10.csv
+
+=== Comprehensive Stability Analysis ===
+
+1. Multi-parameter stability analysis...
+
+Stability Analysis Results:
+     parameter  drift_detected  max_drift_percent  final_drift_percent drift_direction  initial_value   final_value
+    gm_max_raw            True        7184.529856          2219.871151        increase   1.551249e-03  3.598699e-02
+gm_max_forward            True        4142.600769          1212.621546        increase   2.245861e-05  2.947966e-04
+gm_max_reverse            True        7184.529856          2219.871151        increase   1.551249e-03  3.598699e-02
+     I_max_raw            True         888.550974           571.312993        increase   1.300754e-04  8.732130e-04
+ I_max_forward            True         815.246485           783.408294        increase   9.975991e-07  8.812873e-06
+ I_max_reverse            True         888.550974           571.312993        increase   1.300754e-04  8.732130e-04
+     I_min_raw            True         100.000000           -51.330034        decrease   7.470428e-09  3.635855e-09
+ I_min_forward            True         100.000000           -51.330034        decrease   7.470428e-09  3.635855e-09
+ I_min_reverse            True         100.000000           -97.249396        decrease   8.963674e-07  2.465552e-08
+       Von_raw            True         309.859155           -39.436620        decrease   2.859060e-01  1.731544e-01
+   Von_forward            True       14800.000000          7800.000000        increase  -4.026846e-03 -3.181208e-01
+   Von_reverse            True         109.859155           -39.436620        decrease   2.859060e-01  1.731544e-01
+ absgm_max_raw            True        7184.529856          2244.154698        increase   1.551249e-03  3.636369e-02
+  absI_max_raw            True         888.550974           571.312993        increase   1.300754e-04  8.732130e-04
+  absI_min_raw            True         100.000000           -51.330034        decrease   7.470428e-09  3.635855e-09
+
+2. Detailed drift analysis...
+
+gm_max_raw:
+  Drift detected: True
+  Max drift: 7184.530%
+  Final drift: 2219.871%
+  Direction: increase
+  Initial value: 1.551e-03
+  Final value: 3.599e-02
+
+I_max_raw:
+  Drift detected: True
+  Max drift: 888.551%
+  Final drift: 571.313%
+  Direction: increase
+  Initial value: 1.301e-04
+  Final value: 8.732e-04
+
+Von_raw:
+  Drift detected: True
+  Max drift: 309.859%
+  Final drift: -39.437%
+  Direction: decrease
+  Initial value: 2.859e-01
+  Final value: 1.732e-01
+
+absgm_max_raw:
+  Drift detected: True
+  Max drift: 7184.530%
+  Final drift: 2244.155%
+  Direction: increase
+  Initial value: 1.551e-03
+  Final value: 3.636e-02
+
+3. Statistical analysis...
+
+Most stable parameters (lowest CV):
+  1. Von_raw: -607.98% CV
+  2. Von_forward: -59.15% CV
+  3. Von_reverse: 72.56% CV
+  4. I_max_forward: 87.51% CV
+  5. absI_max_forward: 87.51% CV
+
+Least stable parameters (highest CV):
+  1. absgm_max_raw: 106.87% CV
+  2. absgm_max_reverse: 106.87% CV
+  3. gm_max_forward: 112.86% CV
+  4. gm_max_raw: 113.50% CV
+  5. gm_max_reverse: 113.50% CV
+
+=== Advanced Visualization ===
+
+1. Creating evolution plots with different colormaps...
+Evolution plot saved to: evolution_black_to_red.png
+C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis\.venv\Lib\site-packages\oect_transfer_analysis\visualization.py:198: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+  ✓ black_to_red colormap plot saved
+Evolution plot saved to: evolution_viridis.png
+C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis\.venv\Lib\site-packages\oect_transfer_analysis\visualization.py:198: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+  ✓ viridis colormap plot saved
+Evolution plot saved to: evolution_plasma.png
+C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis\.venv\Lib\site-packages\oect_transfer_analysis\visualization.py:198: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+  ✓ plasma colormap plot saved
+Evolution plot saved to: evolution_Reds.png
+C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis\.venv\Lib\site-packages\oect_transfer_analysis\visualization.py:198: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+  ✓ Reds colormap plot saved
+Evolution plot saved to: evolution_Blues.png
+C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis\.venv\Lib\site-packages\oect_transfer_analysis\visualization.py:198: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+  ✓ Blues colormap plot saved
+
+2. Creating multi-stage comparison...
+Comparison plot saved to: multi_stage_comparison.png
+C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis\.venv\Lib\site-packages\oect_transfer_analysis\visualization.py:360: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+  ✓ Multi-stage comparison saved
+
+3. Creating custom time series plots...
+Time series plot saved to: time_series_linear.png
+  ✓ Linear time series plot saved
+
+4. Creating custom subplot grid...
+  ✓ Subplot grid saved
+
+=== High-Quality Animation Generation ===
+
+1. Estimating animation generation time...
+Estimated time for 100 frames:
+  Sequential: 91.9s
+  Parallel (8 workers): 16.4s
+  Total with encoding: 18.0s
+
+2. Generating standard high-quality animation...
+Generating animation with 50 frames...
+X-axis range: (np.float64(-0.6), np.float64(0.6))
+Y-axis range (linear): (np.float64(0.0), np.float64(0.00026415993536240453))
+Y-axis range (log): (np.float64(8.309736878562433e-12), np.float64(0.0026415993536240455))
+Using 8 workers for parallel frame generation...
+Frame generation completed in 6.66s
+Writing video...
+Animation generation completed in 7.21s
+Average time per frame: 0.144s
+Video saved to: high_quality_evolution.mp4
+  ✓ High-quality animation saved: high_quality_evolution.mp4
+
+3. Generating memory-optimized animation...
+Generating memory-optimized animation with batch size 25...
+Processing batch 1-25/100
+C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis\.venv\Lib\site-packages\oect_transfer_analysis\animation.py:97: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`). Consider using `matplotlib.pyplot.close()`.
+  fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize, dpi=dpi)
+  ✗ Error in memory-optimized animation: 
+$V_{GS}$ (V)
+^
+ParseException: Expected end of text, found '$'  (at char 0), (line:1, col:1)
+
+4. Generating custom animation with specific parameters...
+Generating animation with 30 frames...
+X-axis range: (-0.5, 0.5)
+Y-axis range (linear): (0, 2e-06)
+Y-axis range (log): (1e-10, 1e-05)
+Using 8 workers for parallel frame generation...
+Frame generation completed in 4.68s
+OpenCV: FFMPEG: tag 0x34363248/'H264' is not supported with codec id 27 and format 'mp4 / MP4 (MPEG-4 Part 14)'
+OpenCV: FFMPEG: fallback to use tag 0x31637661/'avc1'
+
+Failed to load OpenH264 library: openh264-1.8.0-win64.dll
+        Please check environment and/or download library: https://github.com/cisco/openh264/releases
+
+[libopenh264 @ 000002256fcac240] Incorrect library version loaded
+[ERROR:0@5.926] global cap_ffmpeg_impl.hpp:3264 open Could not open codec libopenh264, error: Unspecified error (-22)
+[ERROR:0@5.926] global cap_ffmpeg_impl.hpp:3281 open VIDEOIO/FFMPEG: Failed to initialize VideoWriter
+Writing video...
+Animation generation completed in 5.68s
+Average time per frame: 0.189s
+Video saved to: custom_animation.mp4
+  ✓ Custom animation saved: custom_animation.mp4
+
+=== Generating Comprehensive Report ===
+
+1. Saving analysis data...
+
+2. Creating summary report...
+  ✓ Comprehensive report saved as 'comprehensive_report.md'
+  ✓ All analysis data exported to CSV files
+
+=== Advanced Analysis Completed! ===
+
+Generated files:
+  Visualizations:
+    - evolution_*.png (various colormaps)
+    - multi_stage_comparison.png
+    - time_series_linear.png
+    - subplot_grid.png
+  Animations:
+    - high_quality_evolution.mp4
+    - memory_optimized_evolution.mp4
+    - custom_animation.mp4
+  Analysis Results:
+    - comprehensive_analysis_results.csv
+    - comprehensive_statistics.csv
+    - stability_analysis.csv
+    - comprehensive_report.md
+
+Processed 100 transfer curves with advanced analysis
+Results ready for publication and further research!
+PS C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis> 

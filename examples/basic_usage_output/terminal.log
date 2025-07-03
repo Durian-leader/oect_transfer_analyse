@@ -1,0 +1,73 @@
+PS C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis> & C:/Users/lidon/Documents/Develop/OECT-dataprocess-packages/oect_transfer_analysis/.venv/Scripts/python.exe c:/Users/lidon/Documents/Develop/OECT-dataprocess-packages/oect_transfer_analysis/examples/basic_usage.py
+=== OECT Transfer Analysis - Basic Usage Example ===
+
+1. Checking dependencies...
+=== Dependency Check ===
+
+Core dependencies:
+  numpy: ✓ Available
+  pandas: ✓ Available
+  matplotlib: ✓ Available
+  oect_transfer: ✓ Available
+
+Optional dependencies (for animation):
+  cv2: ✓ Available
+  PIL: ✓ Available
+
+Animation support: ✓ Available
+
+2. Folder example_data not found, using synthetic data
+
+3. Creating synthetic data for demonstration...
+Created 20 synthetic transfer curves
+
+4. Performing time series analysis...
+Extracted time series data with 20 time points
+
+5. Statistical analysis...
+
+Key statistics (first 5 parameters):
+                count      mean       std       min       max     range  cv_percent
+gm_max_raw       20.0  0.001354  0.000821  0.000067  0.002895  0.002828   60.619490
+gm_max_forward   20.0  0.000009  0.000005  0.000002  0.000018  0.000016   52.669521
+gm_max_reverse   20.0  0.001354  0.000821  0.000067  0.002895  0.002828   60.619490
+I_max_raw        20.0  0.000069  0.000036  0.000005  0.000138  0.000134   52.512832
+I_max_forward    20.0  0.000001  0.000000  0.000000  0.000001  0.000001   50.353230
+
+6. Drift detection...
+  gm_max_raw: DETECTED
+    Direction: decrease
+    Magnitude: 97.00%
+  I_max_raw: DETECTED
+    Direction: decrease
+    Magnitude: 96.56%
+  Von_raw: DETECTED
+    Direction: decrease
+    Magnitude: 160.00%
+
+7. Creating visualizations...
+  - Creating evolution plot...
+Evolution plot saved to: example_evolution.png
+C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis\.venv\Lib\site-packages\oect_transfer_analysis\visualization.py:198: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+    ✓ Evolution plot saved as 'example_evolution.png'
+  - Creating comparison plot...
+Comparison plot saved to: example_comparison.png
+C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis\.venv\Lib\site-packages\oect_transfer_analysis\visualization.py:360: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+    ✓ Comparison plot saved as 'example_comparison.png'
+  - Creating time series plot...
+Time series plot saved to: example_time_series.png
+    ✓ Time series plot saved as 'example_time_series.png'
+
+8. Generating animation...
+Generating animation with 20 frames...
+X-axis range: (np.float64(-0.6), np.float64(0.6))
+Y-axis range (linear): (np.float64(3.4322929733291803e-10), np.float64(0.0001383761634888245))
+Y-axis range (log): (np.float64(3.43229297332918e-11), np.float64(0.0013837616348882451))
+Using 8 workers for parallel frame generation...
+Frame generation completed in 4.12s
+
+Analyzed 20 transfer curves
+Ready for further analysis or publication!
+PS C:\Users\lidon\Documents\Develop\OECT-dataprocess-packages\oect_transfer_analysis>
